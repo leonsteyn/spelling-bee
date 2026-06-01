@@ -25,8 +25,26 @@ export default function App() {
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #ede9fe 0%, #dbeafe 50%, #d1fae5 100%)',
       fontFamily: "'Segoe UI', system-ui, -apple-system, sans-serif",
-      padding: '1rem',
     }}>
+      {/* Back-to-hub banner */}
+      <a
+        href="https://leon-games.netlify.app"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+          background: '#1e293b',
+          color: '#f8fafc',
+          fontSize: '0.82rem',
+          fontWeight: 600,
+          padding: '0.55rem 1.2rem',
+          textDecoration: 'none',
+          letterSpacing: '0.01em',
+        }}
+      >
+        ← All Games
+      </a>
+      <div style={{ padding: '1rem' }}>
       {screen.name === 'home' && (
         <HomeScreen onStart={handleStart} />
       )}
@@ -43,6 +61,7 @@ export default function App() {
           onHome={() => setScreen({ name: 'home' })}
         />
       )}
+      </div>
     </div>
   );
 }
