@@ -13,6 +13,14 @@ interface Props {
 
 const TIMER_TOTAL = 25;
 
+// Maximum word length per difficulty — determines how many boxes are shown.
+// Using the actual longest word in each list so the box count gives no clue.
+const MAX_LETTERS: Record<Difficulty, number> = {
+  beginner: 7,
+  intermediate: 10,
+  advanced: 17,
+};
+
 const difficultyColour: Record<Difficulty, string> = {
   beginner: '#22c55e',
   intermediate: '#f59e0b',
@@ -152,7 +160,8 @@ export default function PracticeMode({ difficulty, onHome }: Props) {
             onChange={setInput}
             onSubmit={() => handleSubmit(false)}
             disabled={submitted || !hasPlayed}
-            placeholder={hasPlayed ? 'Type your spelling here…' : 'Play the word first!'}
+            maxLetters={MAX_LETTERS[difficulty]}
+            placeholder={hasPlayed ? undefined : 'Play the word first!'}
           />
         ) : (
           <ResultBanner result={result!} word={word} />

@@ -16,6 +16,12 @@ interface Props {
 
 const TIMER_TOTAL = 25;
 
+const MAX_LETTERS: Record<Difficulty, number> = {
+  beginner: 7,
+  intermediate: 10,
+  advanced: 17,
+};
+
 const difficultyColour: Record<Difficulty, string> = {
   beginner: '#22c55e',
   intermediate: '#f59e0b',
@@ -275,7 +281,7 @@ export default function TestMode({ difficulty, wordCount, onHome }: Props) {
           onChange={setInput}
           onSubmit={() => doSubmit(false)}
           disabled={submitted || !hasAutoPlayed}
-          placeholder="Type your spelling here…"
+          maxLetters={MAX_LETTERS[difficulty]}
         />
       </div>
     </div>
