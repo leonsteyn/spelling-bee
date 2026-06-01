@@ -77,15 +77,8 @@ export default function AnswerInput({ value, onChange, onSubmit, disabled, maxLe
 
   const hasAnyLetter = value.length > 0;
 
-  // Scale box size so long words fit on mobile screens
-  const boxSize = maxLetters <= 7 ? 52
-    : maxLetters <= 10 ? 44
-    : maxLetters <= 14 ? 36
-    : 30;
-  const fontSize = boxSize >= 46 ? '1.4rem'
-    : boxSize >= 38 ? '1.15rem'
-    : boxSize >= 32 ? '0.95rem'
-    : '0.8rem';
+  // Max box size per difficulty — boxes shrink fluidly below this on small screens
+  const maxBoxSize = maxLetters <= 7 ? 52 : maxLetters <= 10 ? 48 : 38;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.9rem', width: '100%' }}>
@@ -94,12 +87,12 @@ export default function AnswerInput({ value, onChange, onSubmit, disabled, maxLe
         <p style={{ color: '#94a3b8', fontSize: '0.9rem', margin: 0 }}>{placeholder}</p>
       )}
 
-      {/* Letter boxes */}
+      {/* Letter boxes — always a single line, fluid sizing */}
       <div style={{
         display: 'flex',
-        flexWrap: 'wrap',
+        flexWrap: 'nowrap',
         justifyContent: 'center',
-        gap: '6px',
+        gap: '4px',
         width: '100%',
       }}>
         {letters.map((letter, i) => (
@@ -121,9 +114,11 @@ export default function AnswerInput({ value, onChange, onSubmit, disabled, maxLe
             inputMode="text"
             type="text"
             style={{
-              width: `${boxSize}px`,
-              height: `${boxSize}px`,
-              fontSize,
+              flex: '1 1 0',
+              minWidth: 0,
+              maxWidth: `${maxBoxSize}px`,
+              aspectRatio: '1',
+              fontSize: 'clamp(0.65rem, 3vw, 1.3rem)',
               fontWeight: 700,
               textAlign: 'center',
               border: `2px solid ${letter ? '#6366f1' : '#cbd5e1'}`,
@@ -134,6 +129,7 @@ export default function AnswerInput({ value, onChange, onSubmit, disabled, maxLe
               caretColor: 'transparent',
               cursor: disabled ? 'not-allowed' : 'text',
               transition: 'border-color 0.15s, background 0.15s',
+              padding: 0,
             }}
           />
         ))}
